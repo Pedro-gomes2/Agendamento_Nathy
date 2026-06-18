@@ -30,7 +30,11 @@ export class FinancialTransaction {
   @Column({ type: 'varchar', length: 255 })
   description: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: process.env.DATABASE_TYPE === 'sqlite' ? 'datetime' : 'timestamp',
+    default: () =>
+      process.env.DATABASE_TYPE === 'sqlite' ? 'CURRENT_TIMESTAMP' : 'now()',
+  })
   date: Date;
 
   @CreateDateColumn()

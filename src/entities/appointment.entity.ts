@@ -28,7 +28,9 @@ export class Appointment {
   @Column({ type: 'varchar', length: 20 })
   client_phone: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({
+    type: process.env.DATABASE_TYPE === 'sqlite' ? 'datetime' : 'timestamp',
+  })
   date_time: Date;
 
   @Column({
