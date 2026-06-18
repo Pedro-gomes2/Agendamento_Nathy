@@ -2,14 +2,21 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+import * as Sentry from '@sentry/node';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { SanitizePipe } from './common/pipes';
+import { sentryConfig } from './common/config/sentry.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Initialize Sentry
+  if (sentryConfig.enabled) {
+    Sentry.init(sentryConfig);
+  }
 
   app.useGlobalPipes(
     new ValidationPipe({
