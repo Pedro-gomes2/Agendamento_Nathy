@@ -26,6 +26,7 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { User, UserRole } from '../entities/user.entity';
 import { AppointmentStatus } from '../entities/appointment.entity';
+import { PaginationDto } from '../common/dtos/pagination.dto';
 
 @ApiTags('Appointments')
 @Controller('appointments')
@@ -39,6 +40,53 @@ export class AppointmentsController {
   })
   async create(@Body() createAppointmentDto: CreateAppointmentDto) {
     return this.appointmentsService.create(createAppointmentDto);
+  }
+
+  @Get('list/paginated')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @ApiBearerAuth('access-token')
+  @ApiQuery({
+    name: 'page',
+    type: Number,
+    required: false,
+    description: 'Página (padrão: 1)',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: Number,
+    required: false,
+    description: 'Itens por página (padrão: 20, máx: 100)',
+  })
+  @ApiQuery({
+    name: 'sortBy',
+    type: String,
+    required: false,
+    description: 'Campo para ordenação (padrão: created_at)',
+  })
+  @ApiQuery({
+    name: 'sortOrder',
+    type: String,
+    enum: ['ASC', 'DESC'],
+    required: false,
+    description: 'Direção da ordenação (padrão: DESC)',
+  })
+  @ApiOperation({
+    summary: 'Listar agendamentos com paginação',
+    description: 'Apenas admin - retorna agendamentos com paginação',
+  })
+  async findAllPaginated(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('sortBy') sortBy?: string,
+    @Query('sortOrder') sortOrder?: string,
+  ) {
+    const pagination = new PaginationDto();
+    if (page) pagination.page = Math.max(1, parseInt(page, 10) || 1);
+    if (limit) pagination.limit = Math.min(100, Math.max(5, parseInt(limit, 10) || 20));
+    if (sortBy) pagination.sortBy = sortBy;
+    if (sortOrder) pagination.sortOrder = (sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC');
+    return await this.appointmentsService.findAllPaginated(pagination);
   }
 
   @Get()

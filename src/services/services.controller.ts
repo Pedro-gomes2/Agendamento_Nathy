@@ -13,6 +13,7 @@ import {
   ParseFilePipe,
   MaxFileSizeValidator,
   FileTypeValidator,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -31,6 +32,7 @@ import { Roles } from '../common/decorators/roles.decorator';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { UserRole } from '../entities/user.entity';
+import { PaginationDto } from '../common/dtos/pagination.dto';
 
 @ApiTags('Services')
 @Controller('services')
@@ -74,6 +76,25 @@ export class ServicesController {
     imageFile?: Express.Multer.File,
   ) {
     return this.servicesService.create(createServiceDto, imageFile);
+  }
+
+  @Get('list/paginated')
+  @ApiOperation({
+    summary: 'Listar serviços com paginação',
+    description: 'Rota pública - retorna serviços ativos com paginação',
+  })
+  async findAllPaginated(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('sortBy') sortBy?: string,
+    @Query('sortOrder') sortOrder?: string,
+  ) {
+    const pagination = new PaginationDto();
+    if (page) pagination.page = Math.max(1, parseInt(page, 10) || 1);
+    if (limit) pagination.limit = Math.min(100, Math.max(5, parseInt(limit, 10) || 20));
+    if (sortBy) pagination.sortBy = sortBy;
+    if (sortOrder) pagination.sortOrder = (sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC');
+    return this.servicesService.findAllPaginated(pagination);
   }
 
   @Get()

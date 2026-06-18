@@ -10,6 +10,7 @@ import {
 } from '../entities/financial-transaction.entity';
 import { User } from '../entities/user.entity';
 import { CreateTransactionDto } from './dtos/create-transaction.dto';
+import { PaginationDto, PaginatedResponse } from '../common/dtos/pagination.dto';
 
 export interface FinancialReport {
   total_entries: number;
@@ -78,6 +79,32 @@ export class FinancialService {
       relations: ['employee'],
       order: { date: 'DESC' },
     });
+  }
+
+  async findAllPaginated(
+    pagination: PaginationDto,
+  ): Promise<PaginatedResponse<FinancialTransaction>> {
+    const skip = (pagination.page - 1) * pagination.limit;
+
+    const orderObj: any = {};
+    const allowedSortFields = ['id', 'type', 'value', 'description', 'date', 'created_at'];
+    const sortBy = allowedSortFields.includes(pagination.sortBy) ? pagination.sortBy : 'created_at';
+    orderObj[sortBy] = pagination.sortOrder || 'DESC';
+
+    const [transactions, total] = await this.financialRepository.findAndCount({
+      relations: ['employee'],
+      skip,
+      take: pagination.limit,
+      order: orderObj,
+    });
+
+    return {
+      data: transactions,
+      total,
+      page: pagination.page,
+      limit: pagination.limit,
+      pages: Math.ceil(total / pagination.limit),
+    };
   }
 
   async getReport(startDate?: Date, endDate?: Date): Promise<FinancialReport> {

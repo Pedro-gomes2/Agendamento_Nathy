@@ -10,6 +10,7 @@ import { User } from '../entities/user.entity';
 import { Service } from '../entities/service.entity';
 import { CreateAppointmentDto } from './dtos/create-appointment.dto';
 import { UpdateAppointmentDto } from './dtos/update-appointment.dto';
+import { PaginationDto, PaginatedResponse } from '../common/dtos/pagination.dto';
 
 @Injectable()
 export class AppointmentsService {
@@ -106,6 +107,32 @@ export class AppointmentsService {
       relations: ['employee', 'service'],
       order: { date_time: 'DESC' },
     });
+  }
+
+  async findAllPaginated(
+    pagination: PaginationDto,
+  ): Promise<PaginatedResponse<Appointment>> {
+    const skip = (pagination.page - 1) * pagination.limit;
+
+    const orderObj: any = {};
+    const allowedSortFields = ['id', 'client_name', 'date_time', 'status', 'created_at', 'updated_at'];
+    const sortBy = allowedSortFields.includes(pagination.sortBy) ? pagination.sortBy : 'created_at';
+    orderObj[sortBy] = pagination.sortOrder || 'DESC';
+
+    const [appointments, total] = await this.appointmentsRepository.findAndCount({
+      relations: ['employee', 'service'],
+      skip,
+      take: pagination.limit,
+      order: orderObj,
+    });
+
+    return {
+      data: appointments,
+      total,
+      page: pagination.page,
+      limit: pagination.limit,
+      pages: Math.ceil(total / pagination.limit),
+    };
   }
 
   async findByStatus(status: AppointmentStatus): Promise<Appointment[]> {
