@@ -229,68 +229,7 @@ Veja [.env.example](.env.example) para template completo.
 | [**FRONTEND_PROMPT.md**](./FRONTEND_PROMPT.md) | React 19 frontend prompt |
 | [**test/README.md**](./test/README.md) | Guia de testes E2E |
 
-### 🔐 Credenciais de Teste
 
-```json
-{
-  "admin": {
-    "email": "admin@salao.com",
-    "password": "admin123456"
-  },
-  "employee": {
-    "email": "employee1@salao.com",
-    "password": "password123"
-  }
-}
-```
-
----
-
-## 🔗 API Endpoints
-
-### 📋 Quick Reference
-
-```
-🔐 AUTENTICAÇÃO
-POST   /auth/login
-POST   /auth/register-employee      (admin)
-GET    /auth/profile
-
-📅 AGENDAMENTOS
-GET    /appointments                 (admin)
-GET    /appointments/my-appointments (employee)
-POST   /appointments                 (public)
-GET    /appointments/:id
-PATCH  /appointments/:id/confirm
-PATCH  /appointments/:id/complete
-PATCH  /appointments/:id/cancel
-PUT    /appointments/:id
-DELETE /appointments/:id
-
-💅 SERVIÇOS
-GET    /services                     (public)
-GET    /services/:id
-POST   /services                     (admin)
-PUT    /services/:id
-DELETE /services/:id
-
-👥 FUNCIONÁRIAS
-GET    /users/employees
-GET    /users/profile
-GET    /users/:id
-PUT    /users/:id
-PATCH  /users/:id/activate
-PATCH  /users/:id/deactivate
-DELETE /users/:id
-
-💰 FINANCEIRO
-GET    /financial/transactions
-GET    /financial/report/all
-GET    /financial/commissions/all
-GET    /financial/my-financials
-POST   /financial/transactions       (admin)
-DELETE /financial/transactions/:id   (admin)
-```
 
 ### 📖 Documentação Completa
 
@@ -490,60 +429,6 @@ test/
 
 ---
 
-## 🐛 Troubleshooting
-
-### ❌ "Unauthorized" (401)
-
-**Solução:**
-```bash
-# Obter novo token
-curl -X POST http://localhost:3001/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"admin@salao.com","password":"admin123456"}'
-
-# Usar token no header
-Authorization: Bearer eyJhbGc...
-```
-
-Veja [AUTHENTICATION_GUIDE.md](./AUTHENTICATION_GUIDE.md)
-
-### ❌ "Database connection refused"
-
-**Solução:**
-```bash
-# Verificar .env
-cat .env | grep DATABASE_URL
-
-# Testar conexão
-psql postgresql://usuario:senha@host/db
-
-# Reiniciar
-npm run start:dev
-```
-
-### ❌ "Port 3001 already in use"
-
-**Solução (Windows):**
-```bash
-# Listar processo
-netstat -ano | findstr :3001
-
-# Matar processo
-taskkill /PID 1234 /F
-
-# Ou mudar porta em .env
-PORT=3002
-```
-
----
-
-## 📱 Frontend
-
-Um frontend **React 19** completo está pronto!
-
-Veja [FRONTEND_PROMPT.md](./FRONTEND_PROMPT.md) para gerar o frontend.
-
----
 
 ## 🤝 Contribuindo
 
