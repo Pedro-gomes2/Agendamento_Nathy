@@ -12,6 +12,10 @@ export class SanitizePipe implements PipeTransform {
       });
     }
 
+    if (Array.isArray(value)) {
+      return value.map((item) => this.transform(item));
+    }
+
     if (typeof value === 'object' && value !== null && !(value instanceof Date)) {
       const sanitized = {};
       for (const key in value) {
