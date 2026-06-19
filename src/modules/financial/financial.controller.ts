@@ -16,8 +16,20 @@ export class FinancialController {
   constructor(private readonly financialService: FinancialService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Relatório financeiro e transações (admin only)' })
+  @ApiOperation({ summary: 'Listar transações financeiras com paginação' })
   async findAll(@Query() pagination: PaginationDto) {
     return await this.financialService.findAllPaginated(pagination);
+  }
+
+  @Get('report')
+  @ApiOperation({ summary: 'Relatório financeiro resumido (receita total, comissão, etc)' })
+  async getReport() {
+    return await this.financialService.getReport();
+  }
+
+  @Get('commissions')
+  @ApiOperation({ summary: 'Comissões por funcionária ordenadas por valor' })
+  async getCommissions() {
+    return await this.financialService.getCommissions();
   }
 }
