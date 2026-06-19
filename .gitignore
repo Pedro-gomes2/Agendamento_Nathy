@@ -1,8 +1,8 @@
 # Dependencies
 node_modules/
-package-lock.json
 yarn.lock
 pnpm-lock.yaml
+# package-lock.json is REQUIRED for production (Render needs it)
 
 # Environment variables (NEVER commit these!)
 .env
