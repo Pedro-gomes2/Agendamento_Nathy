@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '@/modules/auth/entities/user.entity';
+import { User, UserRole } from '@/modules/auth/entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -15,6 +15,17 @@ export class UsersService {
       select: ['id', 'name', 'email', 'role', 'is_active', 'created_at'],
       where: { is_active: true },
       order: { created_at: 'DESC' },
+    });
+  }
+
+  async findAllPublic() {
+    return await this.usersRepository.find({
+      select: ['id', 'name', 'specialty', 'image_url'],
+      where: {
+        role: UserRole.EMPLOYEE,
+        is_active: true,
+      },
+      order: { name: 'ASC' },
     });
   }
 
