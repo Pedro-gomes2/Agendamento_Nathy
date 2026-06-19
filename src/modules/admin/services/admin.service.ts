@@ -4,8 +4,8 @@ import { Repository } from 'typeorm';
 import { User, UserRole } from '@/modules/auth/entities/user.entity';
 import { Service } from '@/modules/services/entities/service.entity';
 import { AuthService } from '@/modules/auth/services/auth.service';
-import { CreateEmployeeDto } from './dtos/create-employee.dto';
-import { CreateServiceDto } from './dtos/create-service.dto';
+import { CreateEmployeeDto } from '../dto/create-employee.dto';
+import { CreateServiceDto } from '../dto/create-service.dto';
 
 @Injectable()
 export class AdminService {

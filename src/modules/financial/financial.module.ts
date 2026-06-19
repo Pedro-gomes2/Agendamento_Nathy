@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { FinancialService } from './financial.service';
-import { FinancialController } from './financial.controller';
+import { FinancialService } from './services/financial.service';
+import { FinancialController } from './controllers/financial.controller';
 import { FinancialTransaction } from '@/modules/financial/entities/financial-transaction.entity';
 
 @Module({

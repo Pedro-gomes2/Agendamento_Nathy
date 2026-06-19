@@ -1,5 +1,5 @@
 import { Controller, Get, Query, UseGuards } from '@nestjs/common';
-import { FinancialService } from './financial.service';
+import { FinancialService } from '../services/financial.service';
 import { PaginationDto } from '@/common/dtos/pagination.dto';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import { RolesGuard } from '@/common/guards/roles.guard';
