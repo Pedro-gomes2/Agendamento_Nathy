@@ -109,4 +109,75 @@ export class AuthService {
   async hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, 10);
   }
+
+  async seedInitialUsers() {
+    try {
+      // Check if admin exists
+      const adminExists = await this.usersRepository.findOne({
+        where: { email: 'admin@salao.com' },
+      });
+
+      if (adminExists) {
+        return {
+          message: '✅ Database already seeded',
+          users: [],
+        };
+      }
+
+      const createdUsers = [];
+
+      // Create admin
+      const adminPassword = await bcrypt.hash('admin123', 10);
+      const admin = this.usersRepository.create({
+        email: 'admin@salao.com',
+        password: adminPassword,
+        role: UserRole.ADMIN,
+        is_active: true,
+      });
+      await this.usersRepository.save(admin);
+      createdUsers.push({
+        email: 'admin@salao.com',
+        password: 'admin123',
+        role: UserRole.ADMIN,
+      });
+
+      // Create employees
+      const employees = [
+        { email: 'ana@salao.com', commission_rate: 30 },
+        { email: 'bruna@salao.com', commission_rate: 25 },
+      ];
+
+      for (const emp of employees) {
+        const exists = await this.usersRepository.findOne({
+          where: { email: emp.email },
+        });
+
+        if (!exists) {
+          const hashedPwd = await bcrypt.hash('employee123', 10);
+          const employee = this.usersRepository.create({
+            email: emp.email,
+            password: hashedPwd,
+            role: UserRole.EMPLOYEE,
+            is_active: true,
+            commission_rate: emp.commission_rate,
+          });
+          await this.usersRepository.save(employee);
+          createdUsers.push({
+            email: emp.email,
+            password: 'employee123',
+            role: UserRole.EMPLOYEE,
+          });
+        }
+      }
+
+      return {
+        message: '✅ Seed completed successfully',
+        users: createdUsers,
+      };
+    } catch (error) {
+      throw new BadRequestException(
+        `Seed failed: ${error.message}`,
+      );
+    }
+  }
 }

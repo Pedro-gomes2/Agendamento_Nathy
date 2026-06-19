@@ -4,6 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { AuthSeedController } from './auth.controller.seed';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { User } from './entities/user.entity';
 
@@ -19,7 +20,7 @@ const jwtExpiration = process.env.JWT_EXPIRATION || '7d';
       signOptions: { expiresIn: jwtExpiration },
     }),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, AuthSeedController],
   providers: [AuthService, JwtStrategy],
   exports: [JwtModule, AuthService, PassportModule],
 })
