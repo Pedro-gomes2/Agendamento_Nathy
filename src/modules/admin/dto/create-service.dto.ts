@@ -1,4 +1,4 @@
-import { IsString, IsDecimal, IsInt, IsOptional, Validate } from 'class-validator';
+import { IsString, IsNumber, IsInt, IsOptional, Validate, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsValidImageUrl } from '../../../common/validators';
 
@@ -12,8 +12,9 @@ export class CreateServiceDto {
   @IsString()
   description?: string;
 
-  @ApiProperty({ example: '150.00' })
-  @IsDecimal()
+  @ApiProperty({ example: 150.00 })
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
   price!: number;
 
   @ApiProperty({ example: 90, required: false })

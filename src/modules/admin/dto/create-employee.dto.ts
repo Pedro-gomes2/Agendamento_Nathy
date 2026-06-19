@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength, IsDecimal, IsOptional } from 'class-validator';
+import { IsEmail, IsString, MinLength, IsNumber, IsOptional, Min, Max } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateEmployeeDto {
@@ -20,9 +20,11 @@ export class CreateEmployeeDto {
   @IsString()
   specialty?: string;
 
-  @ApiProperty({ example: '25.00', required: false })
+  @ApiProperty({ example: 25.00, required: false })
   @IsOptional()
-  @IsDecimal()
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0)
+  @Max(100)
   commission_percentage?: number;
 
   @ApiProperty({ example: 'https://...', required: false })
