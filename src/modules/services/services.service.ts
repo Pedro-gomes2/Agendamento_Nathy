@@ -1,25 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Appointment } from '@/modules/appointments/entities/appointment.entity';
+import { Service } from '@/modules/services/entity/service.entity';
 import { PaginationDto, PaginatedResponse } from '@/common/dtos/pagination.dto';
 import { MonitorPerformance } from '@/common/decorators/monitor-performance.decorator';
 
 @Injectable()
-export class AppointmentsService {
+export class ServicesService {
   constructor(
-    @InjectRepository(Appointment)
-    private appointmentsRepository: Repository<Appointment>,
+    @InjectRepository(Service)
+    private servicesRepository: Repository<Service>,
   ) {}
 
   @MonitorPerformance(1000)
   async findAllPaginated(
     pagination: PaginationDto,
-  ): Promise<PaginatedResponse<Appointment>> {
+  ): Promise<PaginatedResponse<Service>> {
     const skip = (pagination.page - 1) * pagination.limit;
 
-    const [appointments, total] = await this.appointmentsRepository.findAndCount({
-      relations: ['employee', 'service'],
+    const [services, total] = await this.servicesRepository.findAndCount({
       skip,
       take: pagination.limit,
       order: {
@@ -28,7 +27,7 @@ export class AppointmentsService {
     });
 
     return {
-      data: appointments,
+      data: services,
       total,
       page: pagination.page,
       limit: pagination.limit,
