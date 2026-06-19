@@ -129,6 +129,7 @@ export class AuthService {
       // Create admin
       const adminPassword = await bcrypt.hash('admin123', 10);
       const admin = this.usersRepository.create({
+        name: 'Admin',
         email: 'admin@salao.com',
         password: adminPassword,
         role: UserRole.ADMIN,
@@ -143,8 +144,8 @@ export class AuthService {
 
       // Create employees
       const employees = [
-        { email: 'ana@salao.com', commission_rate: 30 },
-        { email: 'bruna@salao.com', commission_rate: 25 },
+        { name: 'Ana', email: 'ana@salao.com', commission_rate: 30 },
+        { name: 'Bruna', email: 'bruna@salao.com', commission_rate: 25 },
       ];
 
       for (const emp of employees) {
@@ -155,6 +156,7 @@ export class AuthService {
         if (!exists) {
           const hashedPwd = await bcrypt.hash('employee123', 10);
           const employee = this.usersRepository.create({
+            name: emp.name,
             email: emp.email,
             password: hashedPwd,
             role: UserRole.EMPLOYEE,
