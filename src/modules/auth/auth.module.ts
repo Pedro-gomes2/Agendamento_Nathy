@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './strategy/jwt.strategy';
-import { User } from './entity/user.entity';
+import { User } from './entities/user.entity';
 
 const jwtSecret = process.env.JWT_SECRET || 'your_secret_key';
 const jwtExpiration = process.env.JWT_EXPIRATION || '7d';

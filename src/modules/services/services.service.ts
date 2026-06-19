@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Service } from '@/modules/services/entity/service.entity';
+import { Service } from '@/modules/services/entities/service.entity';
 import { PaginationDto, PaginatedResponse } from '@/common/dtos/pagination.dto';
 import { MonitorPerformance } from '@/common/decorators/monitor-performance.decorator';
 

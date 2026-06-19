@@ -18,7 +18,7 @@ import { CurrentUser } from '@/common/decorators/current-user.decorator';
 import { Roles } from '@/common/decorators/roles.decorator';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import { RolesGuard } from '@/common/guards/roles.guard';
-import { User, UserRole } from './entity/user.entity';
+import { User, UserRole } from './entities/user.entity';
 
 @ApiTags('Auth')
 @Controller('auth')

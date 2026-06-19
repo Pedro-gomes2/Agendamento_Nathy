@@ -6,7 +6,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { User } from '@/modules/auth/entity/user.entity';
+import { User } from '@/modules/auth/entities/user.entity';
 
 export enum TransactionType {
   ENTRY = 'entry',
