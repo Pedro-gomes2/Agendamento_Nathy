@@ -94,4 +94,17 @@ export class AuthController {
       image_url: user.image_url,
     };
   }
+
+  @Post('seed')
+  @ApiOperation({
+    summary: 'SEED DATA - Create initial users (TEMPORARY)',
+    description: 'Creates admin@salao.com and employee test users. Remove after first run.',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Seed completed',
+  })
+  async seed() {
+    return await this.authService.seedInitialUsers();
+  }
 }
