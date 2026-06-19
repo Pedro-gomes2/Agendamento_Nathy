@@ -7,6 +7,7 @@ import { UsersModule } from '@/modules/users/users.module';
 import { ServicesModule } from '@/modules/services/services.module';
 import { AppointmentsModule } from '@/modules/appointments/appointments.module';
 import { FinancialModule } from '@/modules/financial/financial.module';
+import { AdminModule } from '@/modules/admin/admin.module';
 import { databaseConfig } from '@/config/database.config';
 import { cacheConfig } from '@/common/config/cache.config';
 
@@ -19,6 +20,7 @@ import { cacheConfig } from '@/common/config/cache.config';
     CacheModule.register(cacheConfig),
     TypeOrmModule.forRoot(databaseConfig()),
     AuthModule,
+    AdminModule,
     UsersModule,
     ServicesModule,
     AppointmentsModule,
