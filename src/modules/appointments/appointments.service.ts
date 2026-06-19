@@ -63,6 +63,7 @@ export class AppointmentsService {
       client_phone: createAppointmentDto.client_phone,
       notes: createAppointmentDto.notes,
       status: AppointmentStatus.PENDING,
+      employee_id: null,
     });
 
     return await this.appointmentsRepository.save(appointment);
