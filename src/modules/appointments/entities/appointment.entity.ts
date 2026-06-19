@@ -7,8 +7,8 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { User } from './user.entity';
-import { Service } from './service.entity';
+import { User } from '@/modules/auth/entities/user.entity';
+import { Service } from '@/modules/services/entities/service.entity';
 
 export enum AppointmentStatus {
   PENDING = 'pending',

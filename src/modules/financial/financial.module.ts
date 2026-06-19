@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FinancialService } from './financial.service';
 import { FinancialController } from './financial.controller';
-import { FinancialTransaction } from '@/entities/financial-transaction.entity';
+import { FinancialTransaction } from '@/modules/financial/entities/financial-transaction.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([FinancialTransaction])],

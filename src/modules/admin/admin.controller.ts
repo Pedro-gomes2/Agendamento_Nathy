@@ -14,7 +14,7 @@ import { AdminService } from './admin.service';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import { RolesGuard } from '@/common/guards/roles.guard';
 import { Roles } from '@/common/decorators/roles.decorator';
-import { UserRole } from '@/entities/user.entity';
+import { UserRole } from '@/modules/auth/entities/user.entity';
 import { CreateEmployeeDto } from './dtos/create-employee.dto';
 import { CreateServiceDto } from './dtos/create-service.dto';
 

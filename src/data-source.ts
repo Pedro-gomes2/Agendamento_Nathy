@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import { DataSource } from 'typeorm';
-import { User } from './entities/user.entity';
-import { Service } from './entities/service.entity';
-import { Appointment } from './entities/appointment.entity';
-import { FinancialTransaction } from './entities/financial-transaction.entity';
+import { User } from './modules/auth/entities/user.entity';
+import { Service } from './modules/services/entities/service.entity';
+import { Appointment } from './modules/appointments/entities/appointment.entity';
+import { FinancialTransaction } from './modules/financial/entities/financial-transaction.entity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',

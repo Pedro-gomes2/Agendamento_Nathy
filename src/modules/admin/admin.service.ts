@@ -1,9 +1,9 @@
 import { Injectable, BadRequestException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User, UserRole } from '@/entities/user.entity';
-import { Service } from '@/entities/service.entity';
-import { AuthService } from '@/modules/auth/auth.service';
+import { User, UserRole } from '@/modules/auth/entities/user.entity';
+import { Service } from '@/modules/services/entities/service.entity';
+import { AuthService } from '@/modules/auth/services/auth.service';
 import { CreateEmployeeDto } from './dtos/create-employee.dto';
 import { CreateServiceDto } from './dtos/create-service.dto';
 

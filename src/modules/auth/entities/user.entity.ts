@@ -6,8 +6,8 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Appointment } from './appointment.entity';
-import { FinancialTransaction } from './financial-transaction.entity';
+import { Appointment } from '@/modules/appointments/entities/appointment.entity';
+import { FinancialTransaction } from '@/modules/financial/entities/financial-transaction.entity';
 
 export enum UserRole {
   ADMIN = 'admin',
